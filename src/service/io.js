@@ -1,8 +1,12 @@
 import { io } from 'socket.io-client';
+import {useDispatch} from 'react-redux'
+import { setRoomLink } from '../redux/reducers/pokerReducer';
 let socket;
 
+
 export const ioCon = () => {
-     socket = io('http://localhost:4000');
+  console.log("yess");
+      this.socket = io('http://localhost:8080');
 }
 export const getMsg = () => {
     socket.on('message', (data) => {
@@ -10,5 +14,18 @@ export const getMsg = () => {
     });
 }
 export const sendMsg = (msg)=>{
-    socket.emit('message', 'Hello from client!');
+    socket.emit('message', msg);
 }
+export const createRoom = (username)=>{
+  // const dispatch = useDispatch()
+    // 
+    socket.emit('createRoom', { username });
+
+  socket.on('roomCreated', (roomId) => {
+    const roomLink = `http://localhost:3000/game1/${roomId}`;
+    console.log(`Room created: ${roomLink}`);
+    // dispatch(setRoomLink(roomLink))
+    // You can now display the room link to the user
+  });
+}
+export default socket;
