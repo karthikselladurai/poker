@@ -41,3 +41,8 @@ App {
   display: grid;
   grid-template-columns: 8% 92%;
 }
+.test{
+  display: flex;
+  justify-content: center;
+  align-items: center
+}

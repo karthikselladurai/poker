@@ -28,3 +28,18 @@
   height: 100px;
   background-color: antiquewhite;
 }
+.poker-table{
+      /* background-image: url(../../../public/assets/table.jpg); */
+      width: 60%;
+      height: 400px;
+      border-radius: 250px;
+      background-size: 100% 100%;
+      border: 30px solid #640a0a;
+      display: flex;
+      justify-content: space-evenly;
+      align-items: center;
+}
+button:disabled{
+  opacity: 1;
+  
+}
