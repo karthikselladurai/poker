@@ -50,6 +50,7 @@ const SingleBoard = () => {
   const [startSeatSelect, setStartSeatSelected] = useState(false)
   const state = useSelector((state) => state.poker);
   const [username, setUsername] = useState('');
+  const [gameOn ,setGameOn] = useState(false)
 
 
 
@@ -90,17 +91,17 @@ const SingleBoard = () => {
   const setSelectedSeatHandler = (data) => {
     let updatedSeatArray = [...seatArray];
     const index = updatedSeatArray.findIndex(item => item.seatId === data.seatId);
-    seatArray[index] = { ...seatArray[index], username: userName, approved: true ,userId:userId};
+    seatArray[index] = { ...seatArray[index], username: userName, approved: true, userId: userId };
     if (index !== -1) {
       updatedSeatArray = seatArray.splice(index)
       updatedSeatArray = updatedSeatArray.concat(seatArray);
       setSeatArray([...updatedSeatArray]);
     }
     setStartSeatSelected(false)
-   
+
     setSendSeatData(true)
   }
-  
+
   useEffect(() => {
     if (!IsGameAdmin) {
       socket.on("Request Accepted", (data) => {
@@ -113,12 +114,6 @@ const SingleBoard = () => {
     }
 
   })
-  // useEffect(()=>{
-  //   socket.on("room seat",(data)=>{
-  //     console.log("room seat",data);
-  //     setSeatArray(data)
-  //   })
-  // })
 
   // Emit Seat Array To Room When It Updates
   useEffect(() => {
@@ -127,21 +122,21 @@ const SingleBoard = () => {
       socket.emit("room message", {
         seatArray: seatArray,
         roomId: roomId,
-        userId:userId
+        userId: userId
       })
       setSendSeatData(false)
-    // }else{
+      // }else{
       // console.log('admin select seat so iam not send seat details to grp ');
     }
   }, [seatArray])
- 
+
   useEffect(() => {
     socket.on("room seat", (data) => {
       setSeatArray(data)
       console.log("room seat receive message update seat array ", data);
     })
     socket.on("new join request", (data) => {
-      console.log("new join request>>>>>>>",data);
+      console.log("new join request>>>>>>>", data);
       setRequestArray(prevArray => [...prevArray, data]);
       console.log("arrayyyyy", requestArray);
     });
@@ -166,12 +161,9 @@ const SingleBoard = () => {
     socket.emit("game start", { roomId: roomId })
 
   }
-  const checkUser = ()=>{
-    socket.emit()
-  }
   return (
     <div className="poker-table">
-      {game &&
+      {game && !gameOn &&
         <div>
           {isRoomRequestAccepted ? (seatArray.map((data) => {
             return (
@@ -189,7 +181,6 @@ const SingleBoard = () => {
           })) : (<span>
             Waiting For Accept the room Request...
           </span>)}
-          {/* <button onClick={send}>send</button> */}
           {isRoomLinkCreated && (
             <div>
               <input placeholder={roomId} defaultValue={`http://localhost:3000/createRoom/game1/${roomId}`}></input>
@@ -207,15 +198,24 @@ const SingleBoard = () => {
               <button onClick={() => { setSelectedSeatHandler({ userName: username, seatId: seatId }) }}>Selected</button>
             </div>
           }
+          {!isButtonDisabled && IsGameAdmin && <div><button onClick={startGameHandler}>Start Game...</button></div>}
         </div>
+        
       }
       {option &&
         <div>
           <Options seatArray={seatArray}></Options>
         </div>
       }
-      {!isButtonDisabled && IsGameAdmin&& <div><button onClick={startGameHandler}>Start Game...</button></div>}
-      <div><button onClick={checkUser}>check user</button></div>
+      
+      <div className="game">
+        {game&&gameOn&&
+        <span>
+
+        </span>        
+        }
+
+      </div>
     </div>
 
   );

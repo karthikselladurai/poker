@@ -4,7 +4,6 @@ export default function Gamescreen() {
     return (
         <div className='game-screen-div'>
             <div className='poker-table'>
-
             </div>
                 
             {/* <div>

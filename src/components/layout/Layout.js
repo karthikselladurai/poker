@@ -19,18 +19,18 @@ export default function Layout() {
     }
     const optionClickHandler = () => {
 
-        if (option) {
-            dispatch(setOption(false))
-        } else {
+        // if (option) {
+            // dispatch(setOption(false))
+        // } else {
             dispatch(setOption(true))
-        }
+        // }
     }
     const gameClickHandler = () => {
-        if (game) {
-            dispatch(setGame(false))
-        } else {
+        // if (game) {
+            // dispatch(setGame(false))
+        // } else {
             dispatch(setGame(true))
-        }
+        // }
     }
     return (
         <div className="layout-div">
