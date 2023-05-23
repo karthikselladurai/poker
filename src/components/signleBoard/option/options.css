@@ -1,20 +1,13 @@
 .options{
+    height: 100%;
 
 }
-.players{
-
+.option-ctn{
+    height: 10%;
+    display: flex;
+    justify-content: space-around;
 }
-.game{
-
-
+.option-view {
+    height: 90%;
 }
-.preference{
-
-}
-.Video-audio{
-
-
-}
-.apply-changes{
     
-}

@@ -1,8 +1,19 @@
-    .navBar-ctn{
+    .navBar-ctn {
         height: 100%;
-    display: flex;
-    align-items: center;
-    justify-content: space-around;
-    /* align-content: space-between; */
-    flex-direction: column;
+        display: flex;
+        align-items: center;
+        justify-content: space-around;
+        /* align-content: space-between; */
+        flex-direction: column;
+    }
+
+    .btn{
+        border: none;
+        background: transparent;
+    }
+    a{
+        text-decoration: none;
+    }
+    .active{
+        /* background-color: red; */
     }

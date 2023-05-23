@@ -7,25 +7,24 @@ import SingleBoard from "./components/signleBoard/SigneBoard";
 import Home from './components/home/Home';
 import  ProtectedRoute from "./service/protectedRoute";
 import GameLayout from "./views/game/GameLayot";
+import Options from "./components/signleBoard/option/Options";
 const AppRouter = () => {
 
     return (
         <Router>
-      {/* <div className="layout-route">
-        {/* <Layout /> */}
-        {/* <div className="test"> */} 
           <Routes>
             <Route path='/' element={ <Login /> } />
+            <Route path='/home' element={<Home />} />
             <Route path ='/game' element={<GameLayout/>}>
-                <Route index element={<Home />} />
+                <Route index element={<SingleBoard />} />
+                <Route path="/game/option" element={<Options/>}/>
+                {/* <Route path='/game/board' element={<SingleBoard />} /> */}
             </Route>
             <Route path='/game1' element={ <Gamescreen /> } />
-            <Route path='/createRoom/game1' element={<SingleBoard />} />
+           
             <Route path='/createRoom/game1/:roomId' element={ <SingleBoard /> } />
             <Route path='/createRoom' element={ <Home /> } />
           </Routes>
-        {/* </div> */}
-      {/* </div> */}
     </Router>
     );
 };

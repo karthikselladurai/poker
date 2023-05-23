@@ -23,7 +23,7 @@ export default function Login() {
                 if (resp.status === 'Success') {
                    let data= {isAuth:true,userId:resp.data[0].user_id,userName:resp.data[0].user_name}
                     dispatch(setIsAuth(data))
-                    navigate('game')
+                    navigate('home')
                 }
                 setIsError(true)
                 setErrorMessage(resp.message)

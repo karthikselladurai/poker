@@ -9,4 +9,10 @@
     top: 50%;
     left: 50%;
     transform: translate(-250px, -250px);
+    background-color: aliceblue;
+}
+.home-ctn{
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
 }

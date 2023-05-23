@@ -1,4 +1,4 @@
-import { configureStore } from '@reduxjs/toolkit';
+import { configureStore,getDefaultMiddleware } from '@reduxjs/toolkit';
 import storage from 'redux-persist/lib/storage';
 import apiReducer from './reducers/apiSlice';
 import pokerReducer from './reducers/pokerReducer';
@@ -20,10 +20,14 @@ const authPersistConfig = {
   storage: storage,
   // whitelist: ['isAuth'],
 };
-
+const pokerPersistConfig = {
+  key: 'poker',
+  storage: storage,
+  // whitelist: ['isAuth'],
+};
 const rootReducer = combineReducers({
   auth:persistReducer(authPersistConfig, authReducer),
-  poker: pokerReducer,
+  poker: persistReducer(pokerPersistConfig,pokerReducer),
   api: apiReducer,
   nav:navReducer
 });
@@ -38,5 +42,6 @@ export const store = configureStore({
   //     },
   //   }),
   middleware: [thunk]
+  // middleware: [...getDefaultMiddleware(), thunk],
 });
 export const persistor = persistStore(store);

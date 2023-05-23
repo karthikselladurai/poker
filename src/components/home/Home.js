@@ -47,7 +47,7 @@ const Home = () => {
       console.log("send admin room joint req");
     });
 
-    navigate("game1", { replace: true });
+    navigate("/game", { replace: true });
   };
   const joinRoomHandler = () => {
     const url = new URL(roomUrl);
@@ -67,7 +67,7 @@ const Home = () => {
       })
       console.log('send user room joint req');
       // console.log("user join the room ", data);
-      navigate("game1", { replace: true });
+      navigate("/game", { replace: true });
 
     }
   }
@@ -80,25 +80,27 @@ const Home = () => {
   })
   return (
     <div className="home">
-      <div>
-        <input
-          type="text"
-          value={name}
-          placeholder="Enter Your Name"
-          onChange={(e) => setName(e.target.value)}
-        />
-        <button onClick={createRoomHandler}>Create Room</button>
+      <div className="home-ctn">
+        <div>
+          <input
+            type="text"
+            value={name}
+            placeholder="Enter Your Name"
+            onChange={(e) => setName(e.target.value)}
+          />
+          <button onClick={createRoomHandler}>Create Room</button>
+        </div>
+        <div>
+          <input
+            type="text"
+            value={roomUrl}
+            placeholder="Enter Room Link"
+            onChange={(e) => SetRoomUrl(e.target.value)}
+          />
+          <button onClick={joinRoomHandler}>Join Room</button>
+        </div>
+        {error && <span>{errorMessage}</span>}
       </div>
-      <div>
-        <input
-          type="text"
-          value={roomUrl}
-          placeholder="Enter Room Link"
-          onChange={(e) => SetRoomUrl(e.target.value)}
-        />
-        <button onClick={joinRoomHandler}>Join Room</button>
-      </div>
-      {error && <span>{errorMessage}</span>}
     </div>
   );
 };

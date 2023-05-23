@@ -1,14 +1,15 @@
 import { createSlice } from '@reduxjs/toolkit'
 
 const initialState = {
-  playersReq:[],
-  isRoomRequestAccepted:false,
+  playersReq: [],
+  playerList: [],
+  isRoomRequestAccepted: false,
   roomLink: null,
-  roomId:null,
+  roomId: null,
   IsGameAdmin: false,
   socket: null,
   userName: null,
-   seats :[
+  seats: [
     {
       seatId: 1,
       username: '',
@@ -50,24 +51,39 @@ export const pokerSlice = createSlice({
       state.userName = action.payload
       console.log(state.poker);
     },
-    setSeatArray:(state,action)=>{
-      state.seats=action.payload
-      console.log("set aarry",state.seats);
+    setSeatArray: (state, action) => {
+      console.log("setSeatArray",action);
+      state.seats = action.payload
+      console.log("set aarry", state.seats);
     },
-    setRoomId:(state,action)=>{
-      state.roomId=action.payload
+    setRoomId: (state, action) => {
+      state.roomId = action.payload
     },
-    setIsRoomRequestAccepted:(state,action)=>{
+    setIsRoomRequestAccepted: (state, action) => {
+      console.log("setIsRoomRequestAccepted",action);
       state.isRoomRequestAccepted = action.payload
     },
-    setPlayersReq:(state,action)=>{
-      console.log("state >>>>>>>>>>> paylod",action.payload);
-      state.playersReq = action.payload
+    setPlayerReq :(state, action) => {
+      console.log("state >>>>>>>>>>> paylod", action.payload);
+      state.playersReq =action.payload
+    },
+    addPlayersReq: (state, action) => {
+      console.log("state >>>>>>>>>>> paylod", action.payload);
+      state.playersReq.push(action.payload)
+    },
+    setPlayerList: (state, action) => {
+      state.playerList=action.payload 
+      console.log("player list >>>>>>>>>>>>>>>> ",state.playerList);
+    },
+    addPlayerList: (state, action) => {
+      console.log("action ",action);
+      state.playerList.push(action.payload) 
+      console.log("player list >>>>>>>>>>>>>>>> ",state.playerList);
     }
   },
 })
 
 // Action creators are generated for each case reducer function
-export const { setRoomLink, setIsGameAdmin, setSocket ,setUserName,setSeatArray,setRoomId,setIsRoomRequestAccepted,setPlayersReq} = pokerSlice.actions
+export const { setRoomLink, setIsGameAdmin, setSocket, setUserName, setSeatArray, setRoomId, setIsRoomRequestAccepted, addPlayersReq,setPlayerReq, addPlayerList,setPlayerList } = pokerSlice.actions
 
 export default pokerSlice.reducer
