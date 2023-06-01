@@ -13,14 +13,21 @@
 .navbar{
     width: 10%;
     background: aliceblue;
-    padding: 10px;
+    /* padding: 10px; */
+    background-image: linear-gradient(to bottom, #000000, #ff0000);
+    /* background-image: url('../../asserts/cards/table-1.avif'); */
 }
 .main-page{
     width: 90%;
-    /* background: antiquewhite; */
+    /* background-image: linear-gradient(to bottom, #464646, #720606); */
+    background-image: url('../../asserts/cards/table-4.jpg');
+    object-fit: contain;
+    background-size: cover;
+     transform: scaleX(1);
+    z-index: 1;
 }
 .layer{
-    width: 60%;
+    width: 40%;
     height: 400px;
     border-radius: 250px;
     background-size: 100% 100%;
@@ -29,4 +36,7 @@
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
+    /* background-image: url('../../asserts/cards/poker-card.jpg'); */
+    background-color: #023202;
+    z-index: -1;
 }

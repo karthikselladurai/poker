@@ -23,7 +23,7 @@ export default function Login() {
                 if (resp.status === 'Success') {
                    let data= {isAuth:true,userId:resp.data[0].user_id,userName:resp.data[0].user_name}
                     dispatch(setIsAuth(data))
-                    navigate('home')
+                    navigate('game')
                 }
                 setIsError(true)
                 setErrorMessage(resp.message)
@@ -39,7 +39,7 @@ export default function Login() {
                     <label className='login-name'>DEVILFISH
                         <label style={{ color: 'red' }} className='login-name'> POKER</label>
                     </label>
-                    <label htmlFor='login-input' className='login-input-label'>Login with your User Name</label>
+                    <label htmlFor='login-input' className='login-input-label'>Login with User Name</label>
                     <input
                         className='login-input'
                         id='login-input'
@@ -56,7 +56,7 @@ export default function Login() {
                         value={password}
                         onChange={(e) => SetPassword(e.target.value)}
                     />
-                    <button onClick={(e) => { e.preventDefault(); goGame() }} className='login-btn'>Send me the Login Code</button>
+                    <button onClick={(e) => { e.preventDefault(); goGame() }} className='login-btn'>Log In</button>
                     {isError && <span style={{ color: 'red' }}>{errorMessage}</span>}
                 </form>)
                 : (<p>Loading...</p>)}

@@ -1,16 +1,21 @@
 import React from "react"
+import {useSelector} from 'react-redux'
 
-import Card from "../cards/Cards";
+
+import './player.css'
+
+import Card from "../card/Card";
 
 const Player = (props) => {
-    console.log("props", props);
+    const userId = useSelector((state) => state.auth.userId)
+    console.log("props player >>>>> ", props);
     console.log("progdfgfdgfdgps>>>>>>>>", props.data.username);
     return (
-        <div>
-            <div>
+        <div className={`player player-${props.index}`}>
+            <div className="card">
                 {props.data.cards.map((card,index) => {
                     return (
-                        <Card  key={index} data={card}/>
+                        <Card  key={index} data={card} isFolded={props.data.userId === userId?false:true}/>
                     )
                 })}
             </div>

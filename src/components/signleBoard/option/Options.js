@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import Players from './Players/Players';
+import PlayersList from './playersList/PlayersList';
 import './options.css'
 
 const Options = (props) => {
@@ -24,7 +24,7 @@ const Options = (props) => {
                 <button>Apply Changes</button>
             </div>
             {players &&
-                <Players seatArray={seatArray} />
+                <PlayersList seatArray={seatArray} />
             }
             {game && <div className='option-view'>
                 <span>Game</span>

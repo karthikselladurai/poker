@@ -2,15 +2,16 @@ import React, { useState, useEffect } from "react";
 import './home.css'
 import { useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from 'react-redux'
-import { setRoomLink, setIsGameAdmin, setUserName, setRoomId, setIsRoomRequestAccepted } from '../../redux/reducers/pokerReducer'
+import { setRoomLink, setIsGameAdmin, setUserName, setRoomId, setIsRoomRequestAccepted, setGameInitiated } from '../../redux/reducers/pokerReducer'
 import randomstring from "randomstring";
 import { createRoom } from "../../service/io";
 import socket from '../../service/socket'
 
-const Home = () => {
+const Home = (props) => {
   const isAuth = useSelector((state) => state.auth.isAuth);
   const userName = useSelector((state) => state.auth.userName);
   const userId = useSelector((state) => state.auth.userId);
+  const IsGameAdmin = useSelector((state) => state.poker.IsGameAdmin);
 
   const dispatch = useDispatch();
   const navigate = useNavigate();
@@ -28,12 +29,12 @@ const Home = () => {
     }
   }, [])
   const createRoomHandler = () => {
+    dispatch(setIsGameAdmin(true))
     socket.emit("createRoom", userId);
     socket.on("roomCreated", (roomId) => {
       const roomLink = `http://localhost:3000/createRoom/game1/${roomId}`;
       console.log(`>>>>>>>>>>>>>>>>>>> Room created: ${roomLink}`);
       dispatch(setRoomLink(roomLink));
-      dispatch(setIsGameAdmin(true))
       dispatch(setRoomId(roomId))
       dispatch(setIsRoomRequestAccepted(true))
       socket.emit("join", {
@@ -45,9 +46,14 @@ const Home = () => {
       }
       )
       console.log("send admin room joint req");
+      // navigate("/game", { replace: true });
+     dispatch(setGameInitiated(true))
     });
+    
+     
 
-    navigate("/game", { replace: true });
+
+    
   };
   const joinRoomHandler = () => {
     const url = new URL(roomUrl);
@@ -66,8 +72,9 @@ const Home = () => {
         seatArray: []
       })
       console.log('send user room joint req');
+      dispatch(setGameInitiated(true))
       // console.log("user join the room ", data);
-      navigate("/game", { replace: true });
+      // navigate("/game", { replace: true });
 
     }
   }

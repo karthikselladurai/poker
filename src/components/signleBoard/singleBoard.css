@@ -24,14 +24,23 @@
     transform: scale(1.1);
   }
 
-  .seat {
+  .seat-btn {
+    background-color: transparent;
     width: 100px;
     height: 100px;
-    background-color: antiquewhite;
+    /* background-color: antiquewhite; */
+    /* color: white; */
+    border: none;
   }
 
   .poker-table {
     height: 100%;
+    width: 100%;
+    position: relative;
+    display: flex;
+    /* background-image: url(../../../public/assets/table.jpg); */
+    align-items: center;
+    justify-content: space-around;
     /* background-image: url(../../../public/assets/table.jpg); */
     /* width: 60%;
       height: 400px;
@@ -53,26 +62,126 @@
 
   }
 
-  .seatSelect-ctn {}
-
-  .seat-btn-ctn { 
-    position: absolute;
+  .seatSelect-ctn {
+    
+  }
+  .waiting{
+    position: relative;
     top: 50%;
     left: 50%;
+    transform: translate(-57%, -1%);
+  }
+
+  .seat-btn-ctn {
+    position: absolute;
+    top: 50%;
+    left: 53%;
     transform: translate(-50%, -50%);
     display: flex;
     gap: 10px;
+    height: 100%;
+    width: 100%
+  }
+
+  .seat-view {
+    width: 10%;
+    height: 13.5%;
+    position: absolute;
+    top: -0.2rem;
+    left: -1.8rem;
+    z-index: 4;
+    background-color: #f3f3f370;
+    /* border: 1px solid; */
+    border-radius: 7px;
+    box-shadow: 0 0 9px 1px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-evenly;
+    color: black;
   }
 
   .room-link {
     position: absolute;
-    top: 60px;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
   }
 
   .start-game {
+    display: flex;
     position: absolute;
-    bottom: 100px;
+    bottom: 20px;
+    right: 20px;
+    width: 110px;
+    height: 40px;
   }
-  .seatSelected{
+.seat-select-ctn{
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
 
+  .seatSelected {}
+
+  .communityCards {
+    /* position: relative; */
+    display: flex;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50px, -50px);
+}
+
+  .seat-0 {
+    z-index: 5;
+    top: 82%;
+    left: 53%;
+
+  }
+
+  .seat-1 {
+    top: 82%;
+    left: 29%;
+  }
+
+  .seat-2 {
+    top: 66%;
+    left: 8%;
+  }
+
+  .seat-3 {
+    top: 40%;
+    left: 2.2%;
+  }
+
+  .seat-4 {
+    top: 14%;
+    left: 8%;
+  }
+
+  .seat-5 {
+    top: 2%;
+    left: 29%;
+  }
+
+  .seat-6 {
+    top: 2%;
+    left: 53%;
+  }
+
+  .seat-7 {
+    top: 14%;
+    left: 74%;
+  }
+
+  .seat-8 {
+    top: 40%;
+    left: 80.5%;
+  }
+
+  .seat-9 {
+    top: 66%;
+    left: 75%;
   }

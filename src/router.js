@@ -14,7 +14,7 @@ const AppRouter = () => {
         <Router>
           <Routes>
             <Route path='/' element={ <Login /> } />
-            <Route path='/home' element={<Home />} />
+            {/* <Route path='/home' element={<Home />} /> */}
             <Route path ='/game' element={<GameLayout/>}>
                 <Route index element={<SingleBoard />} />
                 <Route path="/game/option" element={<Options/>}/>

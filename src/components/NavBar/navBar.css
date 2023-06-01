@@ -5,14 +5,19 @@
         justify-content: space-around;
         /* align-content: space-between; */
         flex-direction: column;
+        /* background-image: linear-gradient(to right, #000000, #ff0a0a); */
+        /* background-image: url('../../asserts/cards/table-1.avif'); */
+        color: white;
     }
 
     .btn{
         border: none;
         background: transparent;
+        color: white;
     }
     a{
         text-decoration: none;
+        color: white;
     }
     .active{
         /* background-color: red; */

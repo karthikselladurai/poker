@@ -1,0 +1,17 @@
+.player-opt{
+    position: absolute;
+    bottom: 10px;
+    /* top: 0; */
+    right: 10px;
+    display: flex;
+    align-items: center;
+}
+.call-btn{
+
+}
+.check-btn{
+
+}
+.fold-btn{
+
+}
