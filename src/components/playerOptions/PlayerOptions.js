@@ -1,7 +1,14 @@
 import { useState } from 'react';
+import { useSelector} from 'react-redux'
 import './playerOptions.css'
+import socket from '../../service/socket';
+import { Socket } from 'socket.io-client';
 
-const PlayerOption = () => {
+const PlayerOption = (props) => {
+    const {setShowOption} = props
+    const roomId = useSelector((state) => state.poker.roomId)
+    const userId = useSelector((state) => state.auth.userId) 
+    console.log('roomId ',roomId);
     const max = 1000
 
     const [raiseValue, setRaiseValue] = useState(0);
@@ -9,10 +16,25 @@ const PlayerOption = () => {
 
 
     const callHandler = () => {
+        console.log('roomId ',roomId);
+        let data = {
+            roomId:roomId,
+            userId:userId,
+            action :'Call'
+        }
+        socket.emit('game/playReceive',data)
+        setShowOption(false)
 
     }
     const raiseHandler = () => {
         setShowRange(true)
+        let data = {
+            roomId:roomId,
+            userId:userId,
+            action :'Raise'
+        }
+        socket.emit('game/playReceive',data)
+        setShowOption(false)
 
     }
     const raiseValueHandler = () => {
@@ -23,6 +45,15 @@ const PlayerOption = () => {
         console.log(event.target.value);
         setRaiseValue(event.target.value);
     };
+    const foldHandler = ()=>{
+        let data = {
+            roomId:roomId,
+            userId:userId,
+            action :'Fold'
+        }
+        socket.emit('game/playReceive',data)
+        setShowOption(false)
+    }
 
 
     return (
@@ -53,7 +84,7 @@ const PlayerOption = () => {
 
             {!showRange &&
                 <div className='fold-btn'>
-                    <button>Fold</button>
+                    <button onClick={foldHandler}>Fold</button>
                 </div>}
 
         </div>

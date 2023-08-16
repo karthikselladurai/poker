@@ -3,6 +3,7 @@ import { createSlice } from '@reduxjs/toolkit'
 const initialState = {
   playersReq: [],
   playerList: [],
+  pocketCards:[],
   communityCards: [],
   gameInitiated:false,
   isRoomRequestAccepted: false,
@@ -114,6 +115,9 @@ export const pokerSlice = createSlice({
     setGameInitiated:(state, action) => {
       state.gameInitiated = action.payload
     },
+    setPocketCards:(state, action) => {
+      state.pocketCards = action.payload
+    },
   },
 })
 
@@ -131,7 +135,8 @@ export const { setRoomLink,
   setPlayerList,
   setCommunityCards,
   addCommunityCards,
-  setGameInitiated
+  setGameInitiated,
+  setPocketCards
 } = pokerSlice.actions
 
 export default pokerSlice.reducer

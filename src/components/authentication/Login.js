@@ -9,11 +9,15 @@ import {setIsAuth} from '../../redux/reducers/authReducer'
 
 export default function Login() {
     const dispatch = useDispatch();
+
     const [isError, setIsError] = useState(false);
     const [errorMessage, setErrorMessage] = useState('')
     const [userName, SetUserName] = useState('');
     const [password, SetPassword] = useState('');
     const loading = useSelector((state) => state.api.loading)
+    const isAuth = useSelector((state) => state.auth.isAuth);
+    console.log("fgsdfgfgsjhfgjhf",isAuth);
+
 
     const navigate = useNavigate();
     const goGame = () => {
@@ -23,7 +27,7 @@ export default function Login() {
                 if (resp.status === 'Success') {
                    let data= {isAuth:true,userId:resp.data[0].user_id,userName:resp.data[0].user_name}
                     dispatch(setIsAuth(data))
-                    navigate('game')
+                    navigate('game/rummy')
                 }
                 setIsError(true)
                 setErrorMessage(resp.message)

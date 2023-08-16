@@ -13,11 +13,15 @@ const Player = (props) => {
     return (
         <div className={`player player-${props.index}`}>
             <div className="card">
-                {props.data.cards.map((card,index) => {
-                    return (
-                        <Card  key={index} data={card} isFolded={props.data.userId === userId?false:true}/>
-                    )
-                })}
+                {props.data.cards ?(
+                    props.data.cards.map((card,index) => {
+                        return (
+                            <Card  key={index} data={card}/>
+                        )
+                    })
+                ):
+                
+                (null)}
             </div>
             <div>
                 <span>{props.data.username}</span>

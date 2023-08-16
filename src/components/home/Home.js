@@ -6,6 +6,7 @@ import { setRoomLink, setIsGameAdmin, setUserName, setRoomId, setIsRoomRequestAc
 import randomstring from "randomstring";
 import { createRoom } from "../../service/io";
 import socket from '../../service/socket'
+import CustomModel from "../../shared/CustomModel";
 
 const Home = (props) => {
   const isAuth = useSelector((state) => state.auth.isAuth);
@@ -19,8 +20,10 @@ const Home = (props) => {
   const [roomUrl, SetRoomUrl] = useState('');
   const [error, setError] = useState(false);
   const [errorMessage, setErrorMessage] = useState('')
+  const [openPopup,setOpenPopup ]= useState(false)
 
   const [name, setName] = useState("");
+  console.log(">>>>>>>>>>>>>>>>>>>>>>>> ",isAuth);
   useEffect(() => {
     if (isAuth) {
       setName(userName)
@@ -28,6 +31,9 @@ const Home = (props) => {
       socket.connect()
     }
   }, [])
+  const popupHandler = ()=>{
+    
+  }
   const createRoomHandler = () => {
     dispatch(setIsGameAdmin(true))
     socket.emit("createRoom", userId);
@@ -73,9 +79,6 @@ const Home = (props) => {
       })
       console.log('send user room joint req');
       dispatch(setGameInitiated(true))
-      // console.log("user join the room ", data);
-      // navigate("/game", { replace: true });
-
     }
   }
   useEffect(() => {
@@ -108,6 +111,7 @@ const Home = (props) => {
         </div>
         {error && <span>{errorMessage}</span>}
       </div>
+      { openPopup &&<CustomModel/>}
     </div>
   );
 };

@@ -4,7 +4,7 @@ import { useState, useEffect } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 
 
-import { setSeatArray, addPlayersReq, setIsRoomRequestAccepted, setRoomId, addPlayerList, setPlayerList, setCommunityCards } from '../../redux/reducers/pokerReducer'
+import {setGameInitiated, setSeatArray, addPlayersReq, setIsRoomRequestAccepted, setRoomId, addPlayerList, setPlayerList, setCommunityCards ,setPocketCards} from '../../redux/reducers/pokerReducer'
 import Player from "../player/player";
 import Options from "./option/Options";
 import socket from "../../service/socket";
@@ -29,6 +29,9 @@ const SingleBoard = () => {
   const [gameOn, setGameOn] = useState(false)
   // const [initiated, setInitiated] = useState(true);
 
+  const [showOption,setShowOption] = useState(false)
+  const [showCommunityCards, setShowCommunityCards ]= useState(false)
+
 
 
   const isRoomRequestAccepted = useSelector((state) => state.poker.isRoomRequestAccepted);
@@ -43,6 +46,7 @@ const SingleBoard = () => {
   const playerList = useSelector((state) => state.poker.playerList)
   const communityCards = useSelector((state) => state.poker.communityCards)
   const gameInitiated =  useSelector((state) => state.poker.gameInitiated)
+  const pocketCards =  useSelector((state) => state.poker.pocketCards)
 
 
   let deck = generateDeckOfCards();
@@ -62,12 +66,6 @@ const SingleBoard = () => {
         dispatch(addPlayersReq(data))
         console.log("arrayyyyy", requestArray);
       });
-      socket.on("room seat", (data) => {
-        console.log("room seat receive message update seat array ", data);
-        dispatch(setSeatArray(data));
-
-      })
-
       setIsRoomLinkCreate(true)
     } else {
       console.log("user Is not Game Admin");
@@ -83,29 +81,68 @@ const SingleBoard = () => {
       })
 
       socket.on("game/room", (data) => {
-        console.log("Received information admin start the game  ", data);
-        data.playerList.sort((a, b) => a.seatId - b.seatId);
-        let updatedPlayerList = [...data.playerList];
-        console.log("before --- array ", updatedPlayerList);
-        console.log(" after --- Sorted array ", updatedPlayerList);
-        const index = data.playerList.findIndex((item) => item.userId === userId);
-        console.log("index ", index);
-        // console.log("step ---- 1  ",updatedPlayerList.splice(index));
-        // console.log("step 2 ---- ",updatedPlayerList.splice(0,index)); 
-        if (index !== 0) {
-          // updatedPlayerList = updatedPlayerList.splice(0, index)
-          updatedPlayerList = [...updatedPlayerList.splice(index), ...updatedPlayerList]
-        }
-        console.log("List updated ------ ", updatedPlayerList);
-        console.log();
-        dispatch(setPlayerList(updatedPlayerList))
-        dispatch(setCommunityCards(data.communityCard))
-        setIsGameStarted(true)
+        // console.log("Received information admin start the game  ", data);
+        // data.playerList.sort((a, b) => a.seatId - b.seatId);
+        // let updatedPlayerList = [...data.playerList];
+        // console.log("before --- array ", updatedPlayerList);
+        // console.log(" after --- Sorted array ", updatedPlayerList);
+        // const index = data.playerList.findIndex((item) => item.userId === userId);
+        // console.log("index ", index);
+        // // console.log("step ---- 1  ",updatedPlayerList.splice(index));
+        // // console.log("step 2 ---- ",updatedPlayerList.splice(0,index)); 
+        // if (index !== 0) {
+        //   // updatedPlayerList = updatedPlayerList.splice(0, index)
+        //   updatedPlayerList = [...updatedPlayerList.splice(index), ...updatedPlayerList]
+        // }
+        // console.log("List updated ------ ", updatedPlayerList);
+        // console.log();
+        // dispatch(setPlayerList(updatedPlayerList))
+        // dispatch(setCommunityCards(data.communityCard))
+        // setIsGameStarted(true)
       })
     }
+    socket.on("room seat", (data) => {
+      console.log("room seat receive message update seat array ", data);
+      dispatch(setSeatArray(data));
 
+    })
+    socket.on('game/playSend',(data)=>{
+      console.log('!-- game/playSend ',data);
+      if(data.currentPlayerUserId === userId){
+        setShowOption(true)
+        console.log("!-- get msg ",data)
+      }
+    })
+    // get individual card 
+    socket.on('private/cards',(data)=>{
+      console.log("private/cards",data);
+      data.sort((a, b) => a.seatId - b.seatId);
+      let updatedPlayerList = [...data];
+      const index = data.findIndex((item) => item.userId === userId);
+      if (index !== 0) {
+        // updatedPlayerList = updatedPlayerList.splice(0, index)
+        updatedPlayerList = [...updatedPlayerList.splice(index), ...updatedPlayerList]
+      }
+      // dispatch(setPocketCards(data.cards))
+      dispatch(setPlayerList(updatedPlayerList))
+      setIsGameStarted(true)
+    })
+    socket.on('community/cards',(data)=>{
+      console.log("community/cards",data);
+      dispatch(setCommunityCards(data.cards))
+      setShowCommunityCards(true)
+    })
+    socket.on('game/end',(data)=>{
+      dispatch(setGameInitiated(true))
+      setIsGameStarted(false)
+
+    })
 
   }, [IsGameAdmin])
+
+  useEffect(()=>{
+    console.log("show option ",showOption);
+  },[showOption])
 
   const seatSelectedHandler = (data) => {
     console.log(">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>", data);
@@ -170,35 +207,35 @@ const SingleBoard = () => {
     console.log("Admin start the game and emit to group ");
     // let deck =  generateDeckOfCards();
 
-    deck = shuffle(deck)
+    // deck = shuffle(deck)
     // console.log("seat array", seatArray);
     let playerList = seatArray.filter((seat) => seat.approved === true)
     console.log('final player list ', playerList);
 
-    let newList = playerList.map((user) => {
-      console.log("users", user);
-      let card = popCards(deck, 2)
-      deck = card.mutableDeckCopy
-      console.log("card, ", card);
-      const updatedUser = { ...user, cards: card.chosenCards };
-      return { ...user, cards: card.chosenCards };
+    // let newList = playerList.map((user) => {
+    //   console.log("users", user);
+    //   let card = popCards(deck, 2)
+    //   deck = card.mutableDeckCopy
+    //   console.log("card, ", card);
+    //   const updatedUser = { ...user, cards: card.chosenCards };
+    //   return { ...user, cards: card.chosenCards };
 
-    })
-    let card = popCards(deck, 3)
-    console.log(">>>>>>>>>> new list", newList);
-    dispatch(setCommunityCards(card.chosenCards))
+    // })
+    // let card = popCards(deck, 3)
+    // console.log(">>>>>>>>>> new list", newList);
+    // dispatch(setCommunityCards(card.chosenCards))
 
     // console.log(`room id ${roomId}`, 'players List', newList,"pocket cards : ",card.chosenCards );
-    socket.emit("game/start", { roomId: roomId, playerList: newList, communityCard: card.chosenCards })
-    let updatedPlayerList = [...newList];
+    socket.emit("game/start", { roomId: roomId, playerList: playerList /*, communityCard: card.chosenCards */})
+    let updatedPlayerList = [...playerList];
     updatedPlayerList.sort((a, b) => a.seatId - b.seatId);
     const index = updatedPlayerList.findIndex((item) => item.userId === userId);
     if (index !== -1) {
       updatedPlayerList = [...updatedPlayerList.splice(index), ...updatedPlayerList.splice(0, index)]
     }
     dispatch(setPlayerList(updatedPlayerList))
-    setIsGameStarted(true)
-    console.log("community cards", communityCards);
+    // setIsGameStarted(true)
+    // console.log("community cards", communityCards);
   }
 
   return (
@@ -253,19 +290,20 @@ const SingleBoard = () => {
       }
       {isGameStarted && (
         <>
-          <div className="communityCards">
+          {showCommunityCards && <div className="communityCards">
             {communityCards.map((card) => (
               <Card key={`${card.suit} ${card.cardFace}`} data={card} />
             ))}
-          </div>
+          </div>}
           <div className="players">
             {playerList.map((player, index) => (
               <Player key={player.userId} index={index} data={player} />
             ))}
           </div>
-          <PlayerOption />
+          {showOption && <PlayerOption roomId={roomId} setShowOption ={setShowOption} />}
         </>
       )}
+      {}
     </div>
   );
 };

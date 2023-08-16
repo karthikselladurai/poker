@@ -44,7 +44,6 @@ const shuffle = (deck) => {
 	let filledSlots = [];
 	for (let i = 0; i < totalNumCards; i++) {
 		if (i === 51) {
-			// Fill last undefined slot when only 1 card left to shuffle
 			const lastSlot = shuffledDeck.findIndex((el) => typeof el == 'undefined');
 				shuffledDeck[lastSlot] = deck[i];
 				filledSlots.push(lastSlot);
@@ -61,9 +60,6 @@ const shuffle = (deck) => {
 }
 
 const popCards = (deck, numToPop) => {
-	// Note: While this is a Shallow Copy, (It copies the references to the children) - note that we are mutating it by 
-	// Actually modifying the array, NOT the children. This is why the length of mutableCopy changes, but that of deck 
-	// Does not.
 	const mutableDeckCopy = [...deck];
 	let chosenCards;
 	if (numToPop === 1) {
