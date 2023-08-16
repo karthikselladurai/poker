@@ -1,5 +1,8 @@
 .options{
-    height: 100%;
+    background-color: #aba8a847;
+    margin: 10px;
+    padding: 10px;
+    width: 60%;
 
 }
 .option-ctn{

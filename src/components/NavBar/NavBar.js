@@ -16,7 +16,7 @@ const NavBar = ()=>{
     }
     return(
         <div className="navBar-ctn">
-            <NavLink to='/game' >Home</NavLink>
+            <NavLink to='/game/poker' >Home</NavLink>
             <NavLink to='option'>Options</NavLink>
             <NavLink>Volume</NavLink>
             <button className="btn" onClick={exitHandler}>Exit</button>

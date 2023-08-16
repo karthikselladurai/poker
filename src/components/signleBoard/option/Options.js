@@ -10,18 +10,23 @@ const Options = (props) => {
     const [game, setGame] = useState(false);
     const [preference, setPreference] = useState(false);
     const [VA, setVA] = useState(false);
+    const [currentOption, setCurrentOPtion] = useState({setPlayers})
 
-    const playersHandler = () => {
 
+    const playersHandler = (data) => {
+        currentOption.setPlayers(false)
+        setCurrentOPtion({setPlayers:data.setOption})
+        data.setOption(true)
+        
     }
     return (
         <div className='options'>
             <div className='option-ctn'>
-                <button onClick={playersHandler}>Players</button>
-                <button>Game</button>
-                <button>preference</button>
-                <button>Video/Audio</button>
-                <button>Apply Changes</button>
+                <button onClick={()=>{playersHandler({setOption:setPlayers})}} >Players</button>
+                <button onClick={()=>{playersHandler({setOption:setGame})}} >Game</button>
+                <button onClick={()=>{playersHandler({setOption:setPreference})}} >preference</button>
+                <button onClick={()=>{playersHandler({setOption:setVA})}} >Video/Audio</button>
+                <button  >Apply Changes</button>
             </div>
             {players &&
                 <PlayersList seatArray={seatArray} />

@@ -140,9 +140,9 @@ const SingleBoard = () => {
 
   }, [IsGameAdmin])
 
-  useEffect(()=>{
-    console.log("show option ",showOption);
-  },[showOption])
+  // useEffect(()=>{
+  //   console.log("show option ",showOption);
+  // },[showOption])
 
   const seatSelectedHandler = (data) => {
     console.log(">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>", data);

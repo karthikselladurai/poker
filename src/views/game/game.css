@@ -25,6 +25,8 @@
     background-size: cover;
      transform: scaleX(1);
     z-index: 1;
+    display: flex;
+    justify-content: center;
 }
 .layer{
     width: 40%;

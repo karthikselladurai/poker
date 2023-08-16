@@ -34,13 +34,13 @@
   }
 
   .poker-table {
-    height: 100%;
+    /* height: 100%;
     width: 100%;
     position: relative;
     display: flex;
-    /* background-image: url(../../../public/assets/table.jpg); */
+  
     align-items: center;
-    justify-content: space-around;
+    justify-content: space-around; */
     /* background-image: url(../../../public/assets/table.jpg); */
     /* width: 60%;
       height: 400px;
